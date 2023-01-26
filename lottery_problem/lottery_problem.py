@@ -15,18 +15,23 @@ def lottery(applicants:list, available_seats:int):
     winner_applicants = []
     while available_seats and applicants:
         random_index = random.choice(range(0, len(applicants)))
-        remaining_tickets = (available_seats - applicants[random_index][1])
+        remaining_tickets = (available_seats - applicants[random_index]["number_of_tickets"])
         if (remaining_tickets < 0):
             applicant = applicants.pop(random_index)
-            applicant[1] = available_seats
+            applicant["number_of_tickets"] = available_seats
             winner_applicants.append(applicant)
             break
         else:
             applicant = applicants.pop(random_index)
-            available_seats -= applicant[1]
+            available_seats -= applicant["number_of_tickets"]
             winner_applicants.append(applicant)
     return winner_applicants
 
-applicants_pool = [['Ali', 2],['Tom', 1],['Fran', 1],['Hyat', 2]]
+applicants_list = [
+                    {"name":'Ali', "number_of_tickets": 2},
+                    {"name":'Ali', "number_of_tickets": 1},
+                    {"name":'Ali', "number_of_tickets": 2},
+                    {"name":'Ali', "number_of_tickets": 1}
+                ]
 available_seats = 9
-print(lottery(applicants=applicants_pool, available_seats=available_seats))
+print(lottery(applicants=applicants_list, available_seats=available_seats))
